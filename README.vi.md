@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/logo.png" alt="vietnam-address-mcp logo" width="110">
+
 # vietnam-address-mcp
 
 **Đổi địa chỉ cũ sang đơn vị hành chính mới (34 tỉnh, bỏ cấp huyện) ngay trong trợ lý AI.**<br>

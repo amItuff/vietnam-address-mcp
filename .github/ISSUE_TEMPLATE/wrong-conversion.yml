@@ -1,0 +1,25 @@
+name: Wrong or missing conversion
+description: An old address converted to the wrong new ward, or was not found
+labels: [data]
+body:
+  - type: input
+    id: old
+    attributes:
+      label: Old address
+      placeholder: "Phường Cống Vị, Quận Ba Đình, Hà Nội"
+    validations: {required: true}
+  - type: input
+    id: got
+    attributes:
+      label: What the tool returned
+    validations: {required: true}
+  - type: input
+    id: expected
+    attributes:
+      label: What you expected
+    validations: {required: true}
+  - type: input
+    id: source
+    attributes:
+      label: Link to the resolution or official page that shows it
+    validations: {required: true}

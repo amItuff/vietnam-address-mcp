@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/logo.png" alt="vietnam-address-mcp logo" width="110">
+
 # vietnam-address-mcp
 
 **Convert old Vietnamese addresses to the new 34-province structure — straight from your AI assistant.**<br>
