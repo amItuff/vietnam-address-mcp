@@ -1,0 +1,16 @@
+{
+  "units": {
+    "repo": "https://github.com/thanglequoc/vietnamese-provinces-database",
+    "commit": "8b78ba5118715e1fa81769286724db79346abf52",
+    "file": "json/vn_only_simplified_json_generated_data_vn_units.json",
+    "license": "MIT",
+    "role": "Current (post-2025) provinces and wards: codes and official names"
+  },
+  "mapping": {
+    "repo": "https://github.com/tranngocminhhieu/vietnamadminunits",
+    "commit": "7fac8c45805aad9916b17237c54baf4502303b93",
+    "file": "data/processed/convert_legacy_2025_with_location_and_default_ward.csv",
+    "license": "MIT",
+    "role": "Legacy 63-province ward list and legacy-to-current ward mapping"
+  }
+}

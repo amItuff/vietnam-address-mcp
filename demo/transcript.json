@@ -1,0 +1,406 @@
+[
+  {
+    "tool": "normalize_address",
+    "args": {
+      "address": "12 Lê Lợi, Phường Bến Nghé, Quận 1, TP.HCM"
+    },
+    "result": {
+      "status": "ok",
+      "inputFormat": "legacy",
+      "confidence": "exact",
+      "street": "12 Lê Lợi",
+      "summary": "Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh → Phường Sài Gòn, Thành phố Hồ Chí Minh",
+      "address": {
+        "ward": {
+          "code": "26740",
+          "fullName": "Phường Sài Gòn"
+        },
+        "province": {
+          "code": "79",
+          "fullName": "Thành phố Hồ Chí Minh"
+        },
+        "formatted": "Phường Sài Gòn, Thành phố Hồ Chí Minh",
+        "formattedWithStreet": "12 Lê Lợi, Phường Sài Gòn, Thành phố Hồ Chí Minh"
+      },
+      "from": {
+        "province": {
+          "code": "79",
+          "fullName": "Thành phố Hồ Chí Minh"
+        },
+        "district": {
+          "code": "760",
+          "fullName": "Quận 1"
+        },
+        "ward": {
+          "code": "26740",
+          "fullName": "Phường Bến Nghé"
+        },
+        "formatted": "Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh"
+      },
+      "notes": []
+    }
+  },
+  {
+    "tool": "normalize_address",
+    "args": {
+      "address": "Phường Cống Vị, Quận Ba Đình, Hà Nội"
+    },
+    "result": {
+      "status": "ok",
+      "inputFormat": "legacy",
+      "confidence": "split_default",
+      "street": null,
+      "summary": "Phường Cống Vị, Quận Ba Đình, Thành phố Hà Nội → Phường Ngọc Hà, Thành phố Hà Nội",
+      "address": {
+        "ward": {
+          "code": "00008",
+          "fullName": "Phường Ngọc Hà"
+        },
+        "province": {
+          "code": "01",
+          "fullName": "Thành phố Hà Nội"
+        },
+        "formatted": "Phường Ngọc Hà, Thành phố Hà Nội",
+        "formattedWithStreet": "Phường Ngọc Hà, Thành phố Hà Nội"
+      },
+      "from": {
+        "province": {
+          "code": "01",
+          "fullName": "Thành phố Hà Nội"
+        },
+        "district": {
+          "code": "001",
+          "fullName": "Quận Ba Đình"
+        },
+        "ward": {
+          "code": "00007",
+          "fullName": "Phường Cống Vị"
+        },
+        "formatted": "Phường Cống Vị, Quận Ba Đình, Thành phố Hà Nội"
+      },
+      "alternatives": [
+        {
+          "ward": {
+            "code": "00025",
+            "fullName": "Phường Giảng Võ"
+          },
+          "province": {
+            "code": "01",
+            "fullName": "Thành phố Hà Nội"
+          },
+          "formatted": "Phường Giảng Võ, Thành phố Hà Nội"
+        }
+      ],
+      "notes": [
+        "Phường Cống Vị was divided between 2 current wards. The default is only a heuristic (the upstream dataset picks the new ward that contains, or is nearest to, the old ward's centre point). Use the street to confirm, or check the alternatives."
+      ]
+    }
+  },
+  {
+    "tool": "normalize_address",
+    "args": {
+      "address": "Phường 1, TP Hồ Chí Minh"
+    },
+    "result": {
+      "status": "ambiguous",
+      "inputFormat": "legacy",
+      "street": null,
+      "candidates": [
+        {
+          "from": {
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "district": {
+              "code": "764",
+              "fullName": "Quận Gò Vấp"
+            },
+            "ward": {
+              "code": "26890",
+              "fullName": "Phường 1"
+            },
+            "formatted": "Phường 1, Quận Gò Vấp, Thành phố Hồ Chí Minh"
+          },
+          "to": {
+            "ward": {
+              "code": "26890",
+              "fullName": "Phường Hạnh Thông"
+            },
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "formatted": "Phường Hạnh Thông, Thành phố Hồ Chí Minh"
+          },
+          "split": false
+        },
+        {
+          "from": {
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "district": {
+              "code": "765",
+              "fullName": "Quận Bình Thạnh"
+            },
+            "ward": {
+              "code": "26944",
+              "fullName": "Phường 1"
+            },
+            "formatted": "Phường 1, Quận Bình Thạnh, Thành phố Hồ Chí Minh"
+          },
+          "to": {
+            "ward": {
+              "code": "26944",
+              "fullName": "Phường Gia Định"
+            },
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "formatted": "Phường Gia Định, Thành phố Hồ Chí Minh"
+          },
+          "split": false
+        },
+        {
+          "from": {
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "district": {
+              "code": "766",
+              "fullName": "Quận Tân Bình"
+            },
+            "ward": {
+              "code": "26977",
+              "fullName": "Phường 1"
+            },
+            "formatted": "Phường 1, Quận Tân Bình, Thành phố Hồ Chí Minh"
+          },
+          "to": {
+            "ward": {
+              "code": "26977",
+              "fullName": "Phường Tân Sơn Hoà"
+            },
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "formatted": "Phường Tân Sơn Hoà, Thành phố Hồ Chí Minh"
+          },
+          "split": false
+        },
+        {
+          "from": {
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "district": {
+              "code": "768",
+              "fullName": "Quận Phú Nhuận"
+            },
+            "ward": {
+              "code": "27058",
+              "fullName": "Phường 1"
+            },
+            "formatted": "Phường 1, Quận Phú Nhuận, Thành phố Hồ Chí Minh"
+          },
+          "to": {
+            "ward": {
+              "code": "27058",
+              "fullName": "Phường Cầu Kiệu"
+            },
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "formatted": "Phường Cầu Kiệu, Thành phố Hồ Chí Minh"
+          },
+          "split": false
+        },
+        {
+          "from": {
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "district": {
+              "code": "770",
+              "fullName": "Quận 3"
+            },
+            "ward": {
+              "code": "27160",
+              "fullName": "Phường 1"
+            },
+            "formatted": "Phường 1, Quận 3, Thành phố Hồ Chí Minh"
+          },
+          "to": {
+            "ward": {
+              "code": "27154",
+              "fullName": "Phường Bàn Cờ"
+            },
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "formatted": "Phường Bàn Cờ, Thành phố Hồ Chí Minh"
+          },
+          "split": false
+        },
+        {
+          "from": {
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "district": {
+              "code": "771",
+              "fullName": "Quận 10"
+            },
+            "ward": {
+              "code": "27184",
+              "fullName": "Phường 1"
+            },
+            "formatted": "Phường 1, Quận 10, Thành phố Hồ Chí Minh"
+          },
+          "to": {
+            "ward": {
+              "code": "27190",
+              "fullName": "Phường Vườn Lài"
+            },
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "formatted": "Phường Vườn Lài, Thành phố Hồ Chí Minh"
+          },
+          "split": false
+        },
+        {
+          "from": {
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "district": {
+              "code": "772",
+              "fullName": "Quận 11"
+            },
+            "ward": {
+              "code": "27247",
+              "fullName": "Phường 1"
+            },
+            "formatted": "Phường 1, Quận 11, Thành phố Hồ Chí Minh"
+          },
+          "to": {
+            "ward": {
+              "code": "27238",
+              "fullName": "Phường Minh Phụng"
+            },
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "formatted": "Phường Minh Phụng, Thành phố Hồ Chí Minh"
+          },
+          "split": false
+        },
+        {
+          "from": {
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "district": {
+              "code": "773",
+              "fullName": "Quận 4"
+            },
+            "ward": {
+              "code": "27298",
+              "fullName": "Phường 1"
+            },
+            "formatted": "Phường 1, Quận 4, Thành phố Hồ Chí Minh"
+          },
+          "to": {
+            "ward": {
+              "code": "27286",
+              "fullName": "Phường Vĩnh Hội"
+            },
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "formatted": "Phường Vĩnh Hội, Thành phố Hồ Chí Minh"
+          },
+          "split": false
+        },
+        {
+          "from": {
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "district": {
+              "code": "774",
+              "fullName": "Quận 5"
+            },
+            "ward": {
+              "code": "27325",
+              "fullName": "Phường 1"
+            },
+            "formatted": "Phường 1, Quận 5, Thành phố Hồ Chí Minh"
+          },
+          "to": {
+            "ward": {
+              "code": "27301",
+              "fullName": "Phường Chợ Quán"
+            },
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "formatted": "Phường Chợ Quán, Thành phố Hồ Chí Minh"
+          },
+          "split": false
+        },
+        {
+          "from": {
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "district": {
+              "code": "775",
+              "fullName": "Quận 6"
+            },
+            "ward": {
+              "code": "27373",
+              "fullName": "Phường 1"
+            },
+            "formatted": "Phường 1, Quận 6, Thành phố Hồ Chí Minh"
+          },
+          "to": {
+            "ward": {
+              "code": "27373",
+              "fullName": "Phường Bình Tiên"
+            },
+            "province": {
+              "code": "79",
+              "fullName": "Thành phố Hồ Chí Minh"
+            },
+            "formatted": "Phường Bình Tiên, Thành phố Hồ Chí Minh"
+          },
+          "split": false
+        }
+      ],
+      "summary": "\"Phường 1\" matches 10 legacy wards; specify the district.",
+      "notes": [
+        "No district was given, so the ward name is not unique in this province."
+      ]
+    }
+  }
+]

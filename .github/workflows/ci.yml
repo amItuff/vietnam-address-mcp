@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+      # The test files use Node's native TypeScript stripping, available from Node 22.
+      - run: npm test
+        if: ${{ matrix.node >= 22 }}
+      - name: Smoke test the built server over stdio
+        run: node scripts/smoke.mjs
+
+  data-reproducible:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch the pinned upstream commits
+        run: |
+          for name in units mapping; do
+            repo=$(node -p "require('./data/sources.json').$name.repo")
+            sha=$(node -p "require('./data/sources.json').$name.commit")
+            git init -q "$RUNNER_TEMP/$name"
+            git -C "$RUNNER_TEMP/$name" fetch -q --depth 1 "$repo" "$sha"
+            git -C "$RUNNER_TEMP/$name" checkout -q FETCH_HEAD
+          done
+      - name: Rebuild the dataset
+        run: node scripts/build-data.mjs --units "$RUNNER_TEMP/units" --mapping "$RUNNER_TEMP/mapping"
+      - name: Committed data must equal the rebuild
+        run: git diff --exit-code -- data/

@@ -1,0 +1,51 @@
+{
+  "name": "vietnam-address-mcp",
+  "version": "0.1.0",
+  "description": "MCP server that converts Vietnamese addresses from the old 63-province format to the new 34-province structure, with an offline, reproducible dataset.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "vietnam-address-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "data/units.json",
+    "data/legacy.json",
+    "data/sources.json",
+    "NOTICE.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node -e \"require('node:fs').chmodSync('dist/index.js', 0o755)\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test --experimental-strip-types test/*.test.ts",
+    "data": "node scripts/build-data.mjs",
+    "prepublishOnly": "npm run typecheck && npm run build && npm test"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "vietnam",
+    "address",
+    "administrative-units"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amItuff/vietnam-address-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amItuff/vietnam-address-mcp/issues"
+  },
+  "homepage": "https://github.com/amItuff/vietnam-address-mcp#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "typescript": "5.9.3"
+  }
+}
