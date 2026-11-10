@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- New tool `normalize_addresses` (up to 200 addresses per call, with a summary).
+- New CLI mode `vietnam-address-mcp csv <file> --column <name>` for spreadsheets.
+- Every result now carries `dataVersion` (`currentThrough`, `effectiveDate`), which is also in the server instructions.
+- Weekly workflow that opens an issue when the pinned upstream data has moved.
+- Dev toolchain: TypeScript 7.
+
 ## 0.1.0
 
 First release.

@@ -8,7 +8,7 @@ const transport = new StdioClientTransport({ command: process.execPath, args: ['
 const client = new Client({ name: 'smoke', version: '0.0.0' });
 await client.connect(transport);
 const { tools } = await client.listTools();
-assert.equal(tools.length, 3);
+assert.equal(tools.length, 4);
 const res = await client.callTool({
   name: 'normalize_address',
   arguments: { address: '12 Lê Lợi, Phường Bến Nghé, Quận 1, TP.HCM' },

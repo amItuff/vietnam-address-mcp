@@ -1,0 +1,51 @@
+name: Upstream data check
+
+# Weekly: compare the pinned upstream commits in data/sources.json with the upstream default
+# branches and open (or update) one issue when either has moved. It never changes data itself:
+# a maintainer reviews the upstream diff, rebuilds, and updates dataVersion deliberately.
+on:
+  schedule:
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare pinned commits with upstream HEAD
+        id: cmp
+        run: |
+          body=""
+          for name in units mapping; do
+            repo=$(node -p "require('./data/sources.json').$name.repo")
+            pinned=$(node -p "require('./data/sources.json').$name.commit")
+            head=$(git ls-remote "$repo" HEAD | cut -f1)
+            if [ -z "$head" ]; then echo "Could not read $repo" >&2; exit 1; fi
+            if [ "$head" != "$pinned" ]; then
+              body="$body- \`$name\` ($repo): pinned \`${pinned:0:7}\`, upstream now \`${head:0:7}\` ([compare]($repo/compare/$pinned...$head))"$'\n'
+            fi
+          done
+          {
+            echo 'body<<EOF'
+            printf '%s' "$body"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+      - name: Open or update the reminder issue
+        if: steps.cmp.outputs.body != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BODY: ${{ steps.cmp.outputs.body }}
+        run: |
+          title="Upstream data has changed: review and update the dataset"
+          text="Upstream moved since the pinned commits:"$'\n\n'"$BODY"$'\n'"Checklist: read the upstream diff, check any new administrative resolution, run \`npm run data\` against the new commits, update \`dataVersion\` in \`data/sources.json\`, run the tests, add a CHANGELOG entry. See CONTRIBUTING.md."
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "\"$title\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body "$text"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body "$text"
+          fi

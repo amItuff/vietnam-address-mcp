@@ -4,15 +4,19 @@ import { z } from 'zod';
 import { normalizeAddress, resolveLegacy } from './address.ts';
 import { getDatabase } from './data.ts';
 import { searchUnits } from './search.ts';
+import { normalizeMany } from './batch.ts';
 
 const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')) as { version: string };
 
 const READ_ONLY = { readOnlyHint: true, idempotentHint: true, destructiveHint: false, openWorldHint: false } as const;
 
-function json(value: unknown) {
+function json(value: object) {
+  const { currentThrough, effectiveDate } = getDatabase().meta.dataVersion;
+  // Every result states which legal basis the data reflects, so stale data is visible to the caller.
+  const out = { ...value, dataVersion: { currentThrough, effectiveDate } };
   return {
-    content: [{ type: 'text' as const, text: JSON.stringify(value, null, 2) }],
-    structuredContent: value as Record<string, unknown>,
+    content: [{ type: 'text' as const, text: JSON.stringify(out, null, 2) }],
+    structuredContent: out as Record<string, unknown>,
   };
 }
 
@@ -30,6 +34,8 @@ export function createServer(): McpServer {
         'Always read `confidence` and `notes`. "split_default" means the old ward was divided between several new wards and the returned one is only a heuristic default; show `alternatives` to the user.',
         'A status of "ambiguous" means the input matches several units; ask the user (usually for the district) rather than choosing.',
         `Data: current names/codes from ${units?.repo} @ ${units?.commit.slice(0, 7)}; old→new mapping from ${mapping?.repo} @ ${mapping?.commit.slice(0, 7)} (both MIT).`,
+        `Data reflects ${db.meta.dataVersion.currentThrough} (effective ${db.meta.dataVersion.effectiveDate}); every result carries \`dataVersion\`. Boundary changes after that date are not included.`,
+        'For many addresses (a list or spreadsheet column) use normalize_addresses instead of calling normalize_address repeatedly.',
         'Not covered: street-level data, coordinates, new→old conversion, wards merged before 2025 that are missing from the 2025-07 legacy list.',
       ].join('\n'),
     },
@@ -55,6 +61,27 @@ export function createServer(): McpServer {
       annotations: { ...READ_ONLY, title: 'Normalize address' },
     },
     ({ address }) => json(normalizeAddress(address)),
+  );
+
+  server.registerTool(
+    'normalize_addresses',
+    {
+      title: 'Normalize many Vietnamese addresses at once',
+      description:
+        'Batch version of normalize_address for up to 200 addresses (for example a column of a customer or order spreadsheet). ' +
+        'Returns one result per input in the same order plus a summary of how many are ok, ambiguous, not_found or divided-ward defaults. ' +
+        'Review ambiguous and not_found items with the user instead of guessing. ' +
+        'Chuẩn hóa hàng loạt địa chỉ cũ sang địa chỉ mới.',
+      inputSchema: {
+        addresses: z
+          .array(z.string().min(1).max(500))
+          .min(1)
+          .max(200)
+          .describe('Comma-separated addresses, each in old or new format.'),
+      },
+      annotations: { ...READ_ONLY, title: 'Normalize addresses (batch)' },
+    },
+    ({ addresses }) => json(normalizeMany(addresses)),
   );
 
   server.registerTool(

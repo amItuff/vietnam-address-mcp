@@ -65,8 +65,25 @@ npm ci && npm run build
 | Tool | Use it to |
 | --- | --- |
 | `normalize_address` | Turn a free-text address, **old or new format**, into the current structure. Keeps the street. |
+| `normalize_addresses` | Batch version for up to 200 addresses (a spreadsheet column) with a summary of ok / ambiguous / not found. |
 | `convert_legacy_address` | Convert an old address that is already split into `province` / `district` / `ward` (e.g. database columns). |
 | `search_units` | Look up provinces and wards by name. `scope: "legacy"` searches old units and shows where each maps today. |
+
+Every result carries `dataVersion` (`currentThrough` and `effectiveDate`), so you can see which legal
+basis the data reflects. It is currently **Resolution 388/NQ-UBTVQH16, effective 2026-09-20**.
+
+### Spreadsheets (CSV)
+
+No MCP client needed for a file of addresses:
+
+```bash
+npx -y vietnam-address-mcp csv customers.csv --column address --output customers.new.csv
+```
+
+The original columns are kept and `new_address`, `address_status`, `address_confidence` and `address_note`
+are appended. Filter on `address_status` (`ok`, `ambiguous`, `not_found`) and on
+`address_confidence = split_default` to review the rows that need a human. Commas, semicolons and tabs
+are detected automatically (override with `--delimiter`).
 
 Try asking your assistant: *"Chuẩn hóa địa chỉ: 12 Lê Lợi, Phường Bến Nghé, Quận 1, TP.HCM"*.
 

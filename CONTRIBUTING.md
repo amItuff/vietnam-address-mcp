@@ -17,7 +17,7 @@ fix is a data pin update, not a code workaround.
 `data/units.json` and `data/legacy.json` are generated, never edited by hand.
 
 1. Check out the two upstream repositories listed in `data/sources.json` at the new commits.
-2. Update the commit hashes in `data/sources.json`.
+2. Update the commit hashes in `data/sources.json`, and `dataVersion` (resolution, effective date) if the legal basis changed.
 3. Run `npm run data -- --units <units checkout> --mapping <mapping checkout>`.
    The script aborts if any count, code join or default-target invariant breaks.
 4. Run `npm test` and review the diff of `data/`.

@@ -59,7 +59,10 @@ const PROVINCE_ALIASES: Record<string, string> = {
 };
 
 export interface Database {
-  meta: { sources: Record<string, { repo: string; commit: string; license: string }> };
+  meta: {
+    dataVersion: { currentThrough: string; effectiveDate: string; legacyBaseline: string };
+    sources: Record<string, { repo: string; commit: string; license: string }>;
+  };
   provinces: Province[];
   wards: Ward[];
   provinceByCode: Map<string, Province>;

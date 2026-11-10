@@ -11,7 +11,7 @@ import { resolve, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const sources = JSON.parse(readFileSync(join(root, 'data/sources.json'), 'utf8'));
+const { dataVersion, ...sources } = JSON.parse(readFileSync(join(root, 'data/sources.json'), 'utf8'));
 
 function arg(name) {
   const i = process.argv.indexOf(`--${name}`);
@@ -174,6 +174,7 @@ for (const r of rows) {
 
 const meta = {
   generatedBy: 'scripts/build-data.mjs',
+  dataVersion,
   sources,
   counts: { provinces: provinces.length, wards: wards.length, legacyProvinces: lp.length, legacyDistricts: ld.length, legacyWards: lw.length, splitLegacyWards: lw.filter((w) => w.split).length },
 };

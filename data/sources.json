@@ -1,4 +1,9 @@
 {
+  "dataVersion": {
+    "currentThrough": "Resolution 388/NQ-UBTVQH16",
+    "effectiveDate": "2026-09-20",
+    "legacyBaseline": "63-province structure in force until 2025-06-30 (General Statistics Office catalogue, mid-2025)"
+  },
   "units": {
     "repo": "https://github.com/thanglequoc/vietnamese-provinces-database",
     "commit": "8b78ba5118715e1fa81769286724db79346abf52",

@@ -65,8 +65,24 @@ npm ci && npm run build
 | Tool | Dùng để |
 | --- | --- |
 | `normalize_address` | Chuẩn hóa địa chỉ viết tự do, **dạng cũ hoặc mới**, về cấu trúc hiện hành. Giữ nguyên số nhà/đường. |
+| `normalize_addresses` | Bản hàng loạt, tối đa 200 địa chỉ (một cột trong bảng tính), kèm thống kê ok / mơ hồ / không tìm thấy. |
 | `convert_legacy_address` | Đổi địa chỉ cũ đã tách sẵn `province` / `district` / `ward` (ví dụ các cột trong database). |
 | `search_units` | Tra tỉnh/xã theo tên. `scope: "legacy"` tra đơn vị cũ và cho biết hiện nay thuộc đơn vị nào. |
+
+Mọi kết quả đều có `dataVersion` (`currentThrough` và `effectiveDate`) để biết dữ liệu theo căn cứ pháp lý nào.
+Hiện là **Nghị quyết 388/NQ-UBTVQH16, hiệu lực 20/9/2026**.
+
+### Bảng tính (CSV)
+
+Không cần MCP client để xử lý một file địa chỉ:
+
+```bash
+npx -y vietnam-address-mcp csv khach-hang.csv --column address --output khach-hang.moi.csv
+```
+
+Giữ nguyên các cột gốc và thêm `new_address`, `address_status`, `address_confidence`, `address_note`.
+Lọc theo `address_status` (`ok`, `ambiguous`, `not_found`) và `address_confidence = split_default` để xem
+các dòng cần người kiểm tra. Tự nhận dấu phẩy, chấm phẩy, tab (đổi bằng `--delimiter`).
 
 Thử hỏi trợ lý: *"Chuẩn hóa địa chỉ: 12 Lê Lợi, Phường Bến Nghé, Quận 1, TP.HCM"*.
 
